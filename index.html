@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Genuary</title>
+
+  <script src="./lib/p5js/p5.min.js"></script>
+  <script src="./lib/v3ga/dessins_geometriques/init_trace.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script>
+    window.NP = 480;
+    window.PI = Math.PI;
+    window.DESSIN = "genuary";
+  </script>
+</head>
+
+<body>
+  <header>
+    <div class="brand">
+      <div class="brand-mark">G</div>
+      <div>
+        <div class="brand-text-main">Genuary</div>
+        <div class="brand-sub">p5 + dessins géométriques</div>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div id="currentDayLabel">Day 1</div>
+      <div id="prompt">Loading…</div>
+    </div>
+
+    <div class="header-right">
+      <div class="header-controls">
+        <div class="select-wrap">
+          <span>Day</span>
+          <select id="daySelect"></select>
+        </div>
+        <button id="prevBtn" title="Previous day">◀ Prev</button>
+        <button id="nextBtn" title="Next day">Next ▶</button>
+        <button id="randomBtn" title="Random day">🎲 Random</button>
+        <button id="restartBtn" title="Re-run current sketch">Restart</button>
+        <button id="pauseBtn" style="width: 60px;" class="primary" title="Pause / resume animation">Pause</button>
+      </div>
+      <div class="header-status">
+        <span id="statusDot" class="status-dot"></span>
+        <span id="statusText">Running</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="sketch-shell">
+      <div id="sketchHost"></div>
+    </section>
+  </main>
+
+  <footer>
+    Genuary sketch viewer · Space = save · Built with p5.js + dessins géométriques
+  </footer>
+
+  <script type="module">
+    const NP = window.NP;
+    const PI = window.PI;
+    const DX = NP / 2;
+    const DY = NP / 2;
+
+    const DAYS = Array.from({ length: 31 }, (_, i) => {
+      const day = i + 1;
+      const d = String(day).padStart(2, "0");
+      return {
+        day,
+        file: `./days/day${d}.js`,
+      };
+    });
+
+    const ctx = { NP, PI, DX, DY };
+
+    const host = document.getElementById("sketchHost");
+    const sel = document.getElementById("daySelect");
+    const promptEl = document.getElementById("prompt");
+    const restartBtn = document.getElementById("restartBtn");
+    const pauseBtn = document.getElementById("pauseBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const randomBtn = document.getElementById("randomBtn");
+    const dayLabel = document.getElementById("currentDayLabel");
+    const statusDot = document.getElementById("statusDot");
+    const statusText = document.getElementById("statusText");
+
+    let active = null;
+    let paused = false;
+    let loading = false;
+    let t0 = 0;
+
+    function populateMenu() {
+      sel.innerHTML = "";
+      for (const d of DAYS) {
+        const opt = document.createElement("option");
+        opt.value = d.day;
+        opt.textContent = `Day ${d.day}`;
+        sel.appendChild(opt);
+      }
+    }
+
+    function updateHeader(day) {
+      dayLabel.textContent = `Day ${day}`;
+    }
+
+    function setPaused(p) {
+      paused = p;
+      if (paused) {
+        pauseBtn.textContent = "Play";
+        statusDot.classList.add("paused");
+        statusText.textContent = "Paused";
+      } else {
+        pauseBtn.textContent = "Pause";
+        statusDot.classList.remove("paused");
+        statusText.textContent = "Running";
+      }
+    }
+
+    async function loadDay(day) {
+      if (loading) return;
+      loading = true;
+
+      if (typeof noLoop === "function") noLoop();
+
+      const entry = DAYS.find(d => d.day === day) || DAYS[0];
+
+      if (active?.cleanup) active.cleanup(ctx);
+
+      try {
+        const mod = await import(entry.file);
+        active = mod.default || mod;
+      } catch (e) {
+        console.error("Failed to load day", day, e);
+        promptEl.textContent = `Erreur de chargement du sketch (Day ${day})`;
+        loading = false;
+        return;
+      }
+
+      const prompt = active?.meta?.prompt || "";
+      promptEl.textContent = prompt || "(no prompt provided)";
+      updateHeader(day);
+
+      const svg = !!active?.meta?.svg;
+
+      // init once for the target mode
+      INIT({ svg });
+
+      // reset pause whenever we change day
+      setPaused(false);
+      pauseBtn.disabled = !!svg;
+      if (svg) {
+        statusText.textContent = "Static (SVG)";
+        statusDot.classList.remove("paused");
+      }
+
+      t0 = (typeof frameCount !== "undefined") ? frameCount : 0;
+      if (active?.setup) active.setup(ctx);
+
+      if (svg) {
+        if (active?.draw) active.draw({ ...ctx, t: 0, frame: 0 });
+        loading = false;
+        return;
+      }
+
+      if (typeof loop === "function") loop();
+      loading = false;
+    }
+
+    sel.addEventListener("change", () => {
+      const day = parseInt(sel.value, 10);
+      loadDay(day);
+    });
+
+    restartBtn.addEventListener("click", () => {
+      const day = parseInt(sel.value, 10);
+      loadDay(day);
+    });
+
+    pauseBtn.addEventListener("click", () => {
+      if (active?.meta?.svg) return; // SVG days are static
+      setPaused(!paused);
+    });
+
+    prevBtn.addEventListener("click", () => {
+      let day = parseInt(sel.value, 10) || 1;
+      day = day <= 1 ? DAYS.length : day - 1;
+      sel.value = day;
+      loadDay(day);
+    });
+
+    nextBtn.addEventListener("click", () => {
+      let day = parseInt(sel.value, 10) || 1;
+      day = day >= DAYS.length ? 1 : day + 1;
+      sel.value = day;
+      loadDay(day);
+    });
+
+    randomBtn.addEventListener("click", () => {
+      const current = parseInt(sel.value, 10) || 1;
+      let day = current;
+      while (day === current && DAYS.length > 1) {
+        day = 1 + Math.floor(Math.random() * DAYS.length);
+      }
+      sel.value = day;
+      loadDay(day);
+    });
+
+    // p5 hooks
+    window.setup = function () {
+      populateMenu();
+      sel.value = DAYS[0].day;
+      updateHeader(DAYS[0].day);
+      loadDay(DAYS[0].day);
+    };
+
+    window.draw = function () {
+      if (!active || paused || loading) return;
+      if (active?.meta?.svg) return;
+
+      const fc = (typeof frameCount !== "undefined") ? frameCount : 0;
+      const t = (fc - t0) * 0.02;
+
+      if (typeof background_ === "function" && typeof BG_COLOR !== "undefined") {
+        background_(BG_COLOR);
+      }
+
+      if (active?.draw) active.draw({ ...ctx, t, frame: fc });
+    };
+  </script>
+</body>
+</html>

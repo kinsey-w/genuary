@@ -1,0 +1,300 @@
+:root {
+    --bg: #05060b;
+    --panel-soft: #151926;
+    --border-soft: #252938;
+    --accent: #ffb347;
+    --accent-soft: rgba(255, 179, 71, 0.14);
+    --text-main: #f5f7ff;
+    --text-muted: #9ba3b8;
+    --text-soft: #6f7586;
+    --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.45);
+    --radius-lg: 16px;
+    --radius-md: 10px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+    background: radial-gradient(circle at top, #15192a 0, #05060b 60%);
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    background: linear-gradient(
+    to bottom,
+    rgba(5, 7, 15, 0.9),
+    rgba(5, 7, 15, 0.75)
+    );
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-mark {
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 30% 20%, #ffb347, #ff5e80);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+    font-weight: 600;
+    color: #05060b;
+}
+
+.brand-text-main {
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: var(--text-main);
+}
+
+.brand-sub {
+    font-size: 12px;
+    color: var(--text-soft);
+}
+
+.header-center {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+}
+
+#currentDayLabel {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+#prompt {
+    font-size: 14px;
+    color: var(--text-main);
+    text-align: center;
+    max-width: 520px;
+    white-space: nowrap;
+    white-space: initial;
+    text-overflow: ellipsis;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.header-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.select-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-soft);
+}
+
+select {
+    background: var(--panel-soft);
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-main);
+    padding: 4px 10px;
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
+}
+
+button {
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    padding: 4px 12px;
+    font-size: 13px;
+    background: rgba(15, 19, 33, 0.9);
+    color: var(--text-main);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s ease, transform 0.08s ease,
+    border-color 0.15s ease, color 0.15s ease;
+}
+
+button:hover {
+    background: rgba(26, 31, 52, 0.95);
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button.primary {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+button.primary:hover {
+    background: rgba(255, 179, 71, 0.22);
+    color: #ffe0b2;
+}
+
+button[disabled] {
+    opacity: 0.4;
+    cursor: default;
+    transform: none;
+}
+
+.header-status {
+    width: 90px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-soft);
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(5, 7, 14, 0.85);
+    backdrop-filter: blur(8px);
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: #4ade80;
+    box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.2);
+}
+
+.status-dot.paused {
+    background: #f97373;
+    box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.2);
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 18px 18px 22px;
+}
+
+.sketch-shell {
+    max-width: 840px;
+    width: 100%;
+    background: radial-gradient(circle at top, #191d30, #0a0c14);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-soft);
+    box-shadow: var(--shadow-soft);
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 640px;
+}
+
+.sketch-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+    radial-gradient(circle at 18% 0%, rgba(255, 179, 71, 0.12), transparent 60%),
+    radial-gradient(circle at 82% 100%, rgba(132, 213, 255, 0.16), transparent 60%);
+    mix-blend-mode: screen;
+    opacity: 0.8;
+}
+
+#sketchHost {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#sketchHost canvas,
+#sketchHost svg {
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+    height: 600px !important;
+    width: 600px !important;
+    background: #05060b;
+}
+
+footer {
+    font-size: 11px;
+    color: var(--text-soft);
+    text-align: center;
+    padding: 6px 10px 10px;
+}
+
+@media (max-width: 960px) {
+    header {
+    flex-wrap: wrap;
+    }
+
+    .header-center {
+    order: 3;
+    margin-top: 4px;
+    }
+
+    #prompt {
+    white-space: normal;
+    }
+
+    .header-right {
+    justify-content: flex-start;
+    }
+}
+
+@media (max-width: 700px) {
+    #sketchHost canvas,
+    #sketchHost svg {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100%;
+    }
+
+    .sketch-shell {
+    min-height: 0;
+    }
+}
