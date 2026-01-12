@@ -2,6 +2,9 @@
 
 Ce projet est un devoir réalisé dans le cadre scolaire, **librement inspiré de _Genuary_**, un défi de création générative qui propose un prompt par jour au mois de janvier.
 
+![demo image](demo-img.png)
+
+
 ## Description
 
 - Chaque **jour** correspond à un **prompt** (ex. : « Vertical or horizontal lines only », « Lava lamp », « Pixel sorting », etc.).
