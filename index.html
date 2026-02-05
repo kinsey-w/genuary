@@ -57,8 +57,26 @@
     </section>
   </main>
 
+  <!-- 🔹 Chatbot Genuary -->
+  <div id="chatWrapper">
+    <button id="chatToggle">💬 Genuary Chat</button>
+    <div id="chatPanel" class="hidden">
+      <div id="chatHeader">GenuaryBot · non-AI</div>
+      <div id="chatMessages"></div>
+      <form id="chatForm">
+        <input
+          id="chatInput"
+          type="text"
+          placeholder="Type something about the site or the code…"
+          autocomplete="off"
+        />
+        <button id="chatSend" type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+
   <footer>
-    Genuary sketch viewer · Space = save · Built with p5.js + dessins géométriques
+    Genuary sketch viewer · Built with p5.js + dessins géométriques
   </footer>
 
   <script type="module">
@@ -233,5 +251,16 @@
       if (active?.draw) active.draw({ ...ctx, t, frame: fc });
     };
   </script>
+    <script>
+    // Override dessins_géométriques default: disable spacebar save completely
+    function keyPressed() {
+      // Do nothing on key presses (no save on space)
+      // If you ever want to handle other keys, do it here.
+    }
+  </script>
+  <!-- Librairie RiveScript (non-IA) -->
+  <script src="https://unpkg.com/rivescript@latest/dist/rivescript.min.js"></script>
+  <script src="./chatbot/chatbot.js"></script>
+
 </body>
 </html>

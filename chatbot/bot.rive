@@ -1,0 +1,82 @@
+! version = 2.0
+! global utf8 = true
+
+! var name = GenuaryBot
+! var project = "this Genuary sketch site"
+
+/*------------------------------------------------------------------
+  BASIC GREETINGS
+-------------------------------------------------------------------*/
+
++ [*](hello|hey|hi|hiya|yo|sup)[*]
+- Hello! I am <bot name>, a non-AI chatbot for <bot project>.
+- Hey! I am <bot name>. I can chat about the site, the prompts, and the code.
+
+/*------------------------------------------------------------------
+  WHO / WHAT
+-------------------------------------------------------------------*/
+
++ (who are you|what are you|who is the bot|who is this bot)
+- I am <bot name>, a rule based chatbot. All my replies are written by hand in a script file.
+- I am <bot name>. I am not an AI, I just follow simple text rules.
+
++ (are you an ai|are you ai|are you intelligent|are you smart)
+- No, I am not an AI. I only match patterns and send back pre written text.
+- Not at all. I am basically a small FAQ with a chat interface.
+
++ (what is this site|what is this project|what is genuary)
+- This project is inspired by Genuary, a generative art challenge with one prompt per day in January. Each day here is a different sketch in the "days/" folder.
+- It is a school project based on Genuary. Each daily prompt is implemented as a p5.js sketch loaded from the "days/dayXX.js" files.
+
+/*------------------------------------------------------------------
+  HOW IT WORKS
+-------------------------------------------------------------------*/
+
++ how does (this site|the site|the project|this page) work
+- The page imports a different file from the "days/" folder for each day. Each file exports an object with meta, setup, and draw functions.
+- At the top of the page you choose a day. Then the code imports "days/dayXX.js", calls its setup and draw functions, and renders everything with p5.js and the "dessins geometriques" library.
+
++ (what tools does it use|what libraries does it use|what languages do you use|what tech is used)
+- The project uses p5.js, the "dessins geometriques" library by v3ga, plus HTML, CSS, and some vanilla JavaScript for the interface.
+- It is mostly p5.js sketches, plus the v3ga geometric drawing helpers, loaded as modules for each day.
+
++ tell me more about (the code|this code|the sketches|the structure)
+- Each sketch lives in a "days/dayXX.js" file. It exports an object with a meta section and setup and draw functions. The main index file dynamically imports the module based on the selected day.
+- Some days render static SVG drawings, others render animated canvas sketches. The main script calls INIT with svg enabled or disabled and passes a shared context object into each sketch.
+
+/*------------------------------------------------------------------
+  FAVORITES / OPINION
+-------------------------------------------------------------------*/
+
++ (what is your favorite day|which prompt do you like|what is your favorite prompt)
+- I like the strange ones, like "pi = 4", "Pixel sorting", or the prompts with weird rules. But I am a bot, so I only pretend to have opinions.
+- I do not really have favorites, but the more abstract and rule based prompts are always fun to code.
+
+/*------------------------------------------------------------------
+  SAVING / INTERACTION
+-------------------------------------------------------------------*/
+
++ (how do i save|how can i save|how to export|how to save) (a drawing|a sketch|the image|the picture|the render)
+- On this site, you can usually hit the space bar to save the current drawing. That is handled by the "dessins geometriques" library in the keyPressed function.
+- To save an image, press the space key. The filename is generated from the drawing parameters and whether it is SVG or PNG.
+
+/*------------------------------------------------------------------
+  WHY / META QUESTIONS
+-------------------------------------------------------------------*/
+
++ why *
+- Good question. Do you have a theory?
+- I do not know, but it sounds like a good thing to debug in the code.
+
++ how was (this|this code|this project) made
+- The idea and prompts come from Genuary. The actual code and sketches were generated with the help of an AI, then put together and adjusted by a human for a school assignment.
+- It is a mix of generative prompts, AI assisted coding, and manual tweaking of p5.js sketches.
+
+/*------------------------------------------------------------------
+  FALLBACK
+-------------------------------------------------------------------*/
+
++ *
+- I do not have a specific reply for that. Maybe ask me about the site, a prompt, or the code structure.
+- I am not sure about that. Try asking something about p5.js, the Genuary days, or how the project works.
+- I am just a scripted bot. I do not understand everything, but I can talk about this project quite well.
