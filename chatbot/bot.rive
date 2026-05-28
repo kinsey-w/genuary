@@ -2,81 +2,221 @@
 ! global utf8 = true
 
 ! var name = GenuaryBot
-! var project = "this Genuary sketch site"
+! var project = this Genuary-inspired generative art site
 
-/*------------------------------------------------------------------
-  BASIC GREETINGS
--------------------------------------------------------------------*/
+// --------------------------------------------------
+// GREETINGS
+// --------------------------------------------------
 
-+ [*](hello|hey|hi|hiya|yo|sup)[*]
-- Hello! I am <bot name>, a non-AI chatbot for <bot project>.
-- Hey! I am <bot name>. I can chat about the site, the prompts, and the code.
++ [*](hello|hi|hey|yo|hiya|sup)[*]
+- Hello. I’m <bot name>. Ask me about the site, the prompts, the sketches, or the code.
+- Hi. I’m <bot name>, the site chatbot for <bot project>.
 
-/*------------------------------------------------------------------
-  WHO / WHAT
--------------------------------------------------------------------*/
++ good (morning|afternoon|evening)
+- Hello. Ready to explore some generative stars?
 
-+ (who are you|what are you|who is the bot|who is this bot)
-- I am <bot name>, a rule based chatbot. All my replies are written by hand in a script file.
-- I am <bot name>. I am not an AI, I just follow simple text rules.
+// --------------------------------------------------
+// IDENTITY
+// --------------------------------------------------
 
-+ (are you an ai|are you ai|are you intelligent|are you smart)
-- No, I am not an AI. I only match patterns and send back pre written text.
-- Not at all. I am basically a small FAQ with a chat interface.
++ (who are you|what are you|who is this|who is the bot)
+- I’m <bot name>, a small rule-based chatbot added to this site.
+- I’m <bot name>. I’m not a large AI model here on the page, just a scripted chatbot with predefined replies.
 
-+ (what is this site|what is this project|what is genuary)
-- This project is inspired by Genuary, a generative art challenge with one prompt per day in January. Each day here is a different sketch in the "days/" folder.
-- It is a school project based on Genuary. Each daily prompt is implemented as a p5.js sketch loaded from the "days/dayXX.js" files.
++ (are you an ai|are you intelligent|are you smart|are you a real ai)
+- No. On the site, I’m a rule-based chatbot built with RiveScript.
+- I’m not a full AI here. I match patterns in your message and reply with prewritten responses.
 
-/*------------------------------------------------------------------
-  HOW IT WORKS
--------------------------------------------------------------------*/
++ what can you do
+- I can answer questions about the site, the prompts, the sketches, the tools used, and the overall project structure.
+- I can help explain how the site works, what the daily pieces are about, and how the code is organized.
 
-+ how does (this site|the site|the project|this page) work
-- The page imports a different file from the "days/" folder for each day. Each file exports an object with meta, setup, and draw functions.
-- At the top of the page you choose a day. Then the code imports "days/dayXX.js", calls its setup and draw functions, and renders everything with p5.js and the "dessins geometriques" library.
+// --------------------------------------------------
+// PROJECT
+// --------------------------------------------------
 
-+ (what tools does it use|what libraries does it use|what languages do you use|what tech is used)
-- The project uses p5.js, the "dessins geometriques" library by v3ga, plus HTML, CSS, and some vanilla JavaScript for the interface.
-- It is mostly p5.js sketches, plus the v3ga geometric drawing helpers, loaded as modules for each day.
++ (what is this site|what is this project|what is genuary|what is this about)
+- This is a Genuary-inspired generative art site. Each day responds to a different prompt, and each sketch is built around a star-based visual system.
+- The project is a gallery of daily generative pieces inspired by Genuary. The site presents them as fullscreen scrolling panels.
 
-+ tell me more about (the code|this code|the sketches|the structure)
-- Each sketch lives in a "days/dayXX.js" file. It exports an object with a meta section and setup and draw functions. The main index file dynamically imports the module based on the selected day.
-- Some days render static SVG drawings, others render animated canvas sketches. The main script calls INIT with svg enabled or disabled and passes a shared context object into each sketch.
++ what is the concept
+- The main concept is to reinterpret a shared star geometry across many different prompts, aesthetics, and systems.
+- The project starts from a common star drawing structure, then transforms it into many different visual ideas across the 31 days.
 
-/*------------------------------------------------------------------
-  FAVORITES / OPINION
--------------------------------------------------------------------*/
++ why stars
+- The star is the common visual thread across the whole project. It keeps the series coherent even when each day explores a very different prompt.
+- Stars were chosen as the recurring shape so the daily prompts could stay connected while still changing style and behavior.
 
-+ (what is your favorite day|which prompt do you like|what is your favorite prompt)
-- I like the strange ones, like "pi = 4", "Pixel sorting", or the prompts with weird rules. But I am a bot, so I only pretend to have opinions.
-- I do not really have favorites, but the more abstract and rule based prompts are always fun to code.
+// --------------------------------------------------
+// SITE STRUCTURE
+// --------------------------------------------------
 
-/*------------------------------------------------------------------
-  SAVING / INTERACTION
--------------------------------------------------------------------*/
++ (how does the site work|how does this site work|how does this page work)
+- The site creates a fullscreen scrolling gallery. Each panel corresponds to one day and mounts a p5.js sketch dynamically.
+- The page is structured as scrollable sections. Each day has its own sketch file and is loaded into the corresponding panel.
 
-+ (how do i save|how can i save|how to export|how to save) (a drawing|a sketch|the image|the picture|the render)
-- On this site, you can usually hit the space bar to save the current drawing. That is handled by the "dessins geometriques" library in the keyPressed function.
-- To save an image, press the space key. The filename is generated from the drawing parameters and whether it is SVG or PNG.
++ (how is the code organized|how is the site organized|what is the code structure|what is the structure)
+- The main page creates the gallery panels, then loads the daily sketches from files like js/sketches/day01.js, day02.js, and so on.
+- The project is split into HTML, CSS, shared JavaScript utilities, and one sketch file per day inside js/sketches.
 
-/*------------------------------------------------------------------
-  WHY / META QUESTIONS
--------------------------------------------------------------------*/
++ where are the sketches
+- The daily sketches live in js/sketches/dayXX.js files.
+- Each day is implemented in its own JavaScript file inside the js/sketches folder.
 
-+ why *
-- Good question. Do you have a theory?
-- I do not know, but it sounds like a good thing to debug in the code.
++ how are sketches loaded
+- The site uses dynamic imports, so each day file is loaded when needed instead of being manually imported one by one.
+- Each panel has a matching mount key like day01 or day12, and the site loads the corresponding sketch module automatically.
 
-+ how was (this|this code|this project) made
-- The idea and prompts come from Genuary. The actual code and sketches were generated with the help of an AI, then put together and adjusted by a human for a school assignment.
-- It is a mix of generative prompts, AI assisted coding, and manual tweaking of p5.js sketches.
++ why does only one sketch run at a time
+- Because the shared drawing bridge uses global bindings, keeping one active sketch at a time avoids conflicts between multiple p5 instances.
+- The site mounts sketches dynamically and usually keeps one active at a time so the shared v3ga-style environment stays stable.
 
-/*------------------------------------------------------------------
-  FALLBACK
--------------------------------------------------------------------*/
+// --------------------------------------------------
+// TOOLS / TECH
+// --------------------------------------------------
+
++ (what tools does it use|what libraries does it use|what tech does it use|what languages does it use|what is it built with)
+- The project uses HTML, CSS, vanilla JavaScript, p5.js, and the v3ga init_trace drawing helpers.
+- The visual sketches are built with p5.js, while the site itself uses standard web technologies and a shared geometry system.
+
++ what is p5
+- p5.js is a JavaScript library for creative coding. It makes it easier to draw, animate, and build interactive visual sketches in the browser.
+- p5.js is the main drawing library used for the daily generative pieces on this site.
+
++ what is v3ga
+- v3ga refers to the dessins geometriques et artistiques library used here through init_trace style helpers.
+- The project uses a helper library inspired by geometric plotting workflows, especially for the shared star drawing logic.
+
+// --------------------------------------------------
+// PROMPTS / DAYS
+// --------------------------------------------------
+
++ (how many days|how many sketches|how many prompts)
+- The site is built as a 31-day series.
+- There are 31 daily sketches in the project.
+
++ what is your favorite day
+- I do not really have favorites, but the more system-based prompts are especially fun to explain.
+- I’m biased toward the days where one rule creates a surprising result.
+
++ (what prompt is this|what is this day|what day is this)
+- The visible panel should show the day number and prompt at the top of the screen.
+- Each section of the gallery includes its day label and prompt in the interface overlay.
+
+// --------------------------------------------------
+// CHATBOT
+// --------------------------------------------------
+
++ (how does the chatbot work|what is this chatbot|how are you made)
+- I’m built with RiveScript, which is a rule-based chatbot scripting system.
+- My replies come from a script file, not from live large-model reasoning inside the page.
+
++ why are you not ai
+- Because this site requirement asks for a chatbot, and a rule-based one is lightweight, local, and easy to integrate into a static site.
+- I’m intentionally simple. I’m here to explain the project, not to simulate a full assistant inside the browser.
+
+// --------------------------------------------------
+// INTERACTION
+// --------------------------------------------------
+
++ (how do i use the site|how do i navigate|how do i explore)
+- Scroll through the fullscreen sections to move from one day to another.
+- Use the page scroll to move through the gallery. Each panel corresponds to a different daily prompt.
+
++ (is it interactive|can i interact|what can i click)
+- Many sketches react to the mouse, and some also react to clicks or keys depending on the day.
+- Several days include interaction such as mouse movement, clicking to regenerate, or toggling visual states.
+
++ how do i save
+- Some drawing helpers support saving, but on this site the main goal is browsing the gallery rather than exporting every sketch directly.
+- Saving depends on how a specific sketch was implemented. The site is mainly designed as an interactive gallery experience.
+
+// --------------------------------------------------
+// AUTHOR / PROCESS
+// --------------------------------------------------
+
++ (how was this made|how did you make this|who made this)
+- The project was assembled as a creative coding site with AI-assisted coding, manual editing, design choices, and prompt-by-prompt iteration.
+- It combines a shared visual system, daily prompt interpretation, site design, and custom sketch logic.
+
++ was ai used
+- Yes. AI-assisted coding was used as part of the process, alongside human direction, editing, and integration.
+- The site combines human artistic direction with AI help for ideation and implementation.
+
+// --------------------------------------------------
+// DAY KEYWORDS
+// --------------------------------------------------
+
++ (tell me about day 1|day 1)
+- Day 1 interprets one color and one shape through a minimal star-based piece.
++ (tell me about day 2|day 2)
+- Day 2 explores layering by stacking star echoes into a depth-based composition.
++ (tell me about day 3|day 3)
+- Day 3 is built around the exact 42-line constraint.
++ (tell me about day 4|day 4)
+- Day 4 turns the star into a low-resolution signal or pixel field.
++ (tell me about day 5|day 5)
+- Day 5 reinterprets the star in isometric space as an architectural object.
++ (tell me about day 6|day 6)
+- Day 6 switches between lights-on and lights-off states like a constellation blackout.
++ (tell me about day 7|day 7)
+- Day 7 uses the star as a loading indicator and progress system.
++ (tell me about day 8|day 8)
+- Day 8 uses chaotic motion to drive a star-based system.
++ (tell me about day 9|day 9)
+- Day 9 renders the star as ASCII output.
++ (tell me about day 10|day 10)
+- Day 10 follows the TAU-only code constraint.
++ (tell me about day 11|day 11)
+- Day 11 reimagines the star as a woven textile motif.
++ (tell me about day 12|day 12)
+- Day 12 turns the star system into a lava lamp atmosphere.
++ (tell me about day 13|day 13)
+- Day 13 uses a simple turning rule to generate an unexpected path.
++ (tell me about day 14|day 14)
+- Day 14 creates controlled wrongness: almost aligned, never quite perfect.
++ (tell me about day 15|day 15)
+- Day 15 explores organic geometry through colony-like star growth.
++ (tell me about day 16|day 16)
+- Day 16 uses recursive subdivision and stars inside terminal cells.
++ (tell me about day 17|day 17)
+- Day 17 imagines the star as a living creature with pulse and limbs.
++ (tell me about day 18|day 18)
+- Day 18 treats glitches as useful behavior rather than errors.
++ (tell me about day 19|day 19)
+- Day 19 grows a seed into branches and star-blooms.
++ (tell me about day 20|day 20)
+- Day 20 applies pixel sorting to a generated star scene.
++ (tell me about day 21|day 21)
+- Day 21 builds the image using gradients only.
++ (tell me about day 22|day 22)
+- Day 22 becomes a screensaver with bouncing star forms.
++ (tell me about day 23|day 23)
+- Day 23 turns stars into architecture in a generated city.
++ (tell me about day 24|day 24)
+- Day 24 uses Boolean logic between overlapping star regions.
++ (tell me about day 25|day 25)
+- Day 25 shows mutation and inheritance across generations of stars.
++ (tell me about day 26|day 26)
+- Day 26 uses pure black and white only, no gray.
++ (tell me about day 27|day 27)
+- Day 27 generates its own palette and builds the piece from it.
++ (tell me about day 28|day 28)
+- Day 28 turns the image into a broken glitch feed.
++ (tell me about day 29|day 29)
+- Day 29 reveals the system as a debug overlay.
++ (tell me about day 30|day 30)
+- Day 30 grows a garden of star-plants.
++ (tell me about day 31|day 31)
+- Day 31 is the finale, a singularity and rebirth cycle.
+
+// --------------------------------------------------
+// FALLBACKS
+// --------------------------------------------------
+
++ [*]help[*]
+- You can ask me about the site, the prompts, the chatbot, the code, or a specific day.
 
 + *
-- I do not have a specific reply for that. Maybe ask me about the site, a prompt, or the code structure.
-- I am not sure about that. Try asking something about p5.js, the Genuary days, or how the project works.
-- I am just a scripted bot. I do not understand everything, but I can talk about this project quite well.
+- I do not have a specific reply for that yet. Try asking about the site, the code, a day number, or the prompts.
+- I’m not sure about that. I work best on questions about this project, its structure, and the daily sketches.

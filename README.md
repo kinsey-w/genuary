@@ -1,18 +1,53 @@
-# Genuary
+# ✦ Genuary
+A generative art project inspired by **Genuary** -
+31 prompts, 31 sketches, all built from a single evolving star drawing.
 
-This project is a school assignment **loosely inspired by _Genuary_**, a generative art challenge with one prompt per day in January.
+![demo image](demo-image.png)
 
-![demo image](demo-img.png)
+---
 
-## Description
+## ✧ Tech
 
-- Each **day** corresponds to a **prompt** (e.g. “Vertical or horizontal lines only”, “Lava lamp”, “Pixel sorting”, etc.).
-- The visuals are generated with **p5.js** and the **dessins géométriques** library by [v3ga].
-- The interface lets you pick a day and display the corresponding sketch (some in canvas, some as SVG).
+* **p5.js** - rendering & interaction
+* **v3ga – dessins géométriques** - base drawing system
+* **JavaScript** - structure & dynamic imports
+* **CSS** - layout & visuals
+* **RiveScript** - rule-based chatbot
 
-In line with the assignment, **all the code and sketch ideas were created with the help of an AI assistant**. 
+---
 
-> ⚠️ The project must be opened through a **local server** (e.g. VS Code’s *Live Server*).  
-> Opening `index.html` directly in the browser will not work because of ES module imports and dynamic loading.
+## ✧ Chatbot
 
-The site also includes a small **“non-AI” chatbot** built with **RiveScript** and **p5.js**.
+The site includes a small chatbot:
+
+* Built with **RiveScript**
+* Fully **rule-based (non-AI)**
+* Answers questions about:
+
+  * the project
+  * the prompts
+  * the code structure
+
+---
+
+## ✧ Notes
+
+* This project was created as a **school assignment**
+* In line with the assignment, **all the code and sketch ideas were created with the help of an AI assistant**. 
+
+---
+
+## ✧ Running the project
+
+You **must use a local server**:
+
+```bash
+# example (VS Code)
+Right click index.html → "Open with Live Server"
+```
+
+Opening the file directly will not work due to:
+
+* ES module imports
+* dynamic sketch loading
+
