@@ -2,6 +2,10 @@
 A generative art project inspired by **Genuary** -
 31 prompts, 31 sketches, all built from a single evolving star drawing.
 
+> Live site: https://genuary-nine.vercel.app/
+
+<br/>
+
 ![demo image](demo-image.png)
 
 ---
